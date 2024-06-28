@@ -36,10 +36,9 @@ int	create_outfile(t_parse *info)
 
 	token_length = info->next_token.length;
 	if (info->cmd->outfile)
-	{
-		close(info->cmd->out_fd);
 		free(info->cmd->outfile);
-	}
+	if (info->cmd->out_fd != STDOUT_FILENO)
+		close(info->cmd->out_fd);
 	info->cmd->outfile = ft_create_str(info->next_token.start, token_length);
 	if (!info->cmd->outfile)
 		return (0);

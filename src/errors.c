@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 14:22:43 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 18:03:18 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:42:21 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
-
-int	error_memory_allocation(t_data *data, t_command *command)
-{
-	ft_putstr_fd("minishell: memory allocation error\n", 2);
-	free_all(data, command);
-	data->exit_status = EXIT_FAILURE;
-	return (EXIT_FAILURE);
-}
 
 int	error_no_such(char *file_name, t_data *data)
 {
@@ -26,7 +18,7 @@ int	error_no_such(char *file_name, t_data *data)
 	ft_putstr_fd(file_name, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
 	data->exit_status = EXIT_FAILURE;
-	return (EXIT_FAILURE);	
+	return (EXIT_FAILURE);
 }
 
 int	error_permission(char *file_name, t_data *data)

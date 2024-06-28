@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:12:26 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 14:59:07 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:31:35 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	ft_cd(t_data *data, t_command *command)
 
 	argc = ft_arraylen(command->argv);
 	data->exit_status = EXIT_FAILURE;
-	// if (argc > 2)
-	// {
-	// 	write(2, "minishell: cd: too many arguments\n", 34);
-	// 	return (EXIT_FAILURE);
-	// }
+	if (argc > 2)
+	{
+		write(2, "minishell: cd: too many arguments\n", 34);
+		return (EXIT_FAILURE);
+	}
 	if (ft_changedir(data, command, argc) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	data->exit_status = update_pwd_oldpwd(data, command);

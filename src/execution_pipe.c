@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:09:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/27 21:36:38 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:01:32 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	execute_builtin(t_data *data, t_command *command, char **paths)
 	else if (ft_strncmp(command->argv[0], "pwd", ft_strlen("pwd")) == 0)
 		return (ft_pwd(data, command, true));
 	else if (ft_strncmp(command->argv[0], "unset", ft_strlen("unset")) == 0)
-		return (ft_unset(data, command));
+		return (ft_unset(data, command->argv));
 	return (EXIT_FAILURE);
 }
 
@@ -43,7 +43,7 @@ static void	execute_cmd(t_data *data, t_command *command, char **paths)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		dup_fds(data, command);
+		dup_fds(data, command, paths);
 		if (is_builtin(command->argv[0]))
 		{
 			data->exit_status = execute_builtin(data, command, paths);
@@ -69,7 +69,7 @@ static int	set_fds(t_command *command, t_command *prev_cmd)
 	{
 		if (pipe(command->pipe_fd) < 0)
 		{
-			write(2, "pipe: ", 10);
+			ft_putstr_fd("pipe: error\n", 2);
 			return (EXIT_FAILURE);
 		}
 		if (command->out_fd == STDOUT_FILENO)
@@ -89,11 +89,11 @@ static void	wait_child(t_data *data, t_command *cmd, t_command *prev_cmd)
 	{
 		set_signal_handler(RUNNING, cur_cmd);
 		waitpid(cur_cmd->pid, &data->exit_status, 0);
-		if (WIFSIGNALED(data->exit_status) && cur_cmd->in_fd != -1 && cur_cmd->out_fd != -1)
+		if (WIFSIGNALED(data->exit_status) && \
+			cur_cmd->in_fd != -1 && cur_cmd->out_fd != -1)
 			data->exit_status += 128;
 		if (WIFEXITED(data->exit_status))
 			data->exit_status = WEXITSTATUS(data->exit_status);
-
 		cur_cmd = cur_cmd->pipe;
 	}
 	if (prev_cmd)
@@ -117,13 +117,13 @@ int	execution_pipe(t_data *data, t_command *command, char **paths)
 				return (execute_builtin(data, cur_cmd, paths));
 			else if (cur_cmd->argv)
 				execute_cmd(data, cur_cmd, paths);
-			if (cur_cmd->pipe)
-				close(cur_cmd->pipe_fd[1]);
-			if (prev_cmd && prev_cmd->pipe)
-				close(prev_cmd->pipe_fd[0]);
+			close_pipes(cur_cmd, prev_cmd);
 			if (cur_cmd->pipe)
 				prev_cmd = cur_cmd;
 		}
+		else if (!cur_cmd->argv && cur_cmd->in_fd != -1 && \
+					cur_cmd->out_fd != -1)
+			data->exit_status = 0;
 		cur_cmd = cur_cmd->pipe;
 	}
 	wait_child(data, command, prev_cmd);

@@ -12,23 +12,6 @@
 
 #include "../incl/minishell.h"
 
-int	analyze_word(t_parse *info)
-{
-	t_command	*cmd;
-	t_data		*data;
-	char		*str;
-
-	cmd = info->cmd;
-	data = info->data;
-	str = ft_create_str(info->token.start, info->token.length);
-	if (!str)
-		return (error_memory_allocation(data, data->cmd_head));
-	cmd->argv = expand_array(cmd->argv, str);
-	if (!cmd->argv)
-		return (error_memory_allocation(data, data->cmd_head));
-	return (EXIT_SUCCESS);
-}
-
 int	analyze_redirect_in(t_parse *info)
 {
 	int			token_length;
@@ -58,6 +41,21 @@ int	analyze_redirect_in(t_parse *info)
 	return (EXIT_SUCCESS);
 }
 
+void	analyze_redirect_append(t_data *data, t_command *cmd)
+{
+	if (cmd->out_fd >= 0 && cmd->in_fd >= 0)
+	{
+		cmd->out_fd = open(cmd->outfile, O_CREAT | O_APPEND | O_RDWR, 00644);
+		if (cmd->out_fd == -1)
+		{
+			if (errno == ENOENT)
+				error_no_such(cmd->outfile, data);
+			else if (errno == EACCES)
+				error_permission(cmd->outfile, data);
+		}
+	}
+}
+
 int	analyze_redirect_out(t_parse *info)
 {
 	t_command	*cmd;
@@ -68,19 +66,7 @@ int	analyze_redirect_out(t_parse *info)
 	if (!create_outfile(info))
 		return (error_memory_allocation(data, data->cmd_head));
 	if (info->token.type == TOKEN_REDIRECT_APPEND)
-	{
-		if (cmd->out_fd >= 0 && cmd->in_fd >= 0)
-		{
-			cmd->out_fd = open(cmd->outfile, O_CREAT | O_APPEND | O_RDWR, 00644);
-			if (cmd->out_fd == -1)
-			{
-				if (errno == ENOENT)
-					error_no_such(cmd->outfile, data);
-				else if (errno == EACCES)
-					error_permission(cmd->outfile, data);
-			}
-		}
-	}
+		analyze_redirect_append(data, cmd);
 	else
 	{
 		if (cmd->out_fd >= 0 && cmd->in_fd >= 0)

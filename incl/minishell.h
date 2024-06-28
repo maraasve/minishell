@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:46 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 17:57:59 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:02:03 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ typedef struct s_parse
 
 /* ******************************EXECUTION******************************* */
 void	get_cmd_array(t_command *command);
-void	dup_fds(t_data *data, t_command *command);
-void	ft_heredoc(t_data *data, t_command *command, char **paths);
+void	dup_fds(t_data *data, t_command *command, char **paths);
+int		ft_heredoc(t_data *data, t_command *command, char **paths);
 void	ft_pipe_heredoc(t_data *data, t_command *command, char **paths);
 int		execution(t_data *data, t_command *command);
 int		execution_pipe(t_data *data, t_command *command, char **paths);
@@ -118,6 +118,7 @@ int		is_builtin(char *cmd);
 bool	paths_exists(t_data *data, char **paths_array);
 bool	access_true(t_data *data, char *cmd);
 char	*get_command(t_data *data, char **paths_array, char *cmd);
+void	close_pipes(t_command *cur_cmd, t_command *prev_cmd);
 
 /* ******************************ENVP******************************* */
 int		ft_arraylen(char **array);
@@ -155,13 +156,13 @@ char	**expand_array(char **old_array, char *str);
 t_token	ft_scan_token(t_scanner *scanner, t_data *data);
 
 /* ****************************BUILT_IN************************************* */
-void	print_sorted_array(t_command *cmd, char **array);
+int		print_sorted_array(t_command *cmd, char **array);
 void	exit_request(t_data *data, t_command *command);
 int		ft_echo(t_data *data, t_command command);
 int		ft_cd(t_data *data, t_command *command);
 int		ft_pwd(t_data *data, t_command *command, bool print);
 int		ft_export(t_data *data, t_command *command);
-int		ft_unset(t_data *data, t_command *cmd);
+int		ft_unset(t_data *data, char **argv);
 int		ft_unset_export(t_data *data, char *str);
 int		ft_env(t_data *data, t_command *command, bool check_argv);
 int		ft_env_len(char *str);

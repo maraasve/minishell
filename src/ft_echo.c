@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:11:05 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 17:31:55 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:29:37 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	ft_echo(t_data *data, t_command command)
 	}
 	if (flag_n == false)
 		ft_putstr_fd("\n", command.out_fd);
-	data->exit_status = EXIT_SUCCESS;
+	if (command.out_fd != -1 && command.in_fd != -1)
+		data->exit_status = EXIT_SUCCESS;
 	return (EXIT_SUCCESS);
 }

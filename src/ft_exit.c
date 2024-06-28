@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 13:51:45 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 14:55:23 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:36:51 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ int	ft_exit(t_data *data, t_command *cmd, t_command *cur_cmd, char **paths)
 	if (argc > 1 && !is_numeric_str(cmd->argv[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		data->exit_status = 255;
+		ft_putstr_fd("numeric argument required\n", 2);
+		data->exit_status = 2;
 	}
 	else if (argc > 2)
 	{

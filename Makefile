@@ -33,6 +33,8 @@ analyze_token_utils.c\
 errors.c\
 memory_utils.c\
 signals.c\
+analyze_token_word.c\
+errors_mem.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJDIR = obj

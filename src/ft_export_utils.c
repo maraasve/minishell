@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 11:55:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/27 10:46:22 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:00:20 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_env_len(char *str)
 	return (i);
 }
 
-void	print_sorted_array(t_command *cmd, char **array)
+int	print_sorted_array(t_command *cmd, char **array)
 {
 	int	i;
 	int	j;
@@ -92,6 +92,7 @@ void	print_sorted_array(t_command *cmd, char **array)
 		ft_putstr_fd("\n", cmd->out_fd);
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	ft_unset_export(t_data *data, char *str)

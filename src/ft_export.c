@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:49:23 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 14:36:29 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:07:34 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_export_env(t_data *data, t_command *command, int i)
 {
 	if (find_env(command->argv[i], ft_env_len(command->argv[i]), data->env))
 	{
-		if (ft_unset(data, command) == EXIT_FAILURE)
+		if (ft_unset(data, command->argv) == EXIT_FAILURE)
 			return (error_memory_allocation(data, data->cmd_head));
 	}
 	if (find_env(command->argv[i], \
@@ -106,9 +106,9 @@ int	ft_export(t_data *data, t_command *command)
 	int		true_exp_var;
 
 	i = 1;
-	true_exp_var = true_exportable_var(data, command->argv[i]);
 	if (!command->argv[i])
-		print_sorted_array(command, data->export_var);
+		return (print_sorted_array(command, data->export_var));
+	true_exp_var = true_exportable_var(data, command->argv[i]);
 	while (command->argv[i])
 	{
 		if (true_exp_var == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:50 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 21:02:24 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 16:13:15 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 volatile sig_atomic_t	g_signum = 0;
 
-// static void	check_terminals(void)
-// {
-// 	if (!isatty(STDIN_FILENO))
-// 	{
-// 		write(2, "minishell: stdin: not a tty\n", 28);
-// 		exit(1);
-// 	}
-// 	if (!isatty(STDOUT_FILENO))
-// 	{
-// 		write(2, "minishell: stdout: not a tty\n", 29);
-// 		exit(1);
-// 	}
-// 	if (!isatty(STDERR_FILENO))
-// 	{
-// 		write(2, "minishell: stderr: not a tty\n", 29);
-// 		exit(1);
-// 	}
-// }
+static void	check_terminals(void)
+{
+	if (!isatty(STDIN_FILENO))
+	{
+		write(2, "minishell: stdin: not a tty\n", 28);
+		exit(1);
+	}
+	if (!isatty(STDOUT_FILENO))
+	{
+		write(2, "minishell: stdout: not a tty\n", 29);
+		exit(1);
+	}
+	if (!isatty(STDERR_FILENO))
+	{
+		write(2, "minishell: stderr: not a tty\n", 29);
+		exit(1);
+	}
+}
 
 static int	lexer(t_data *data, t_command *command)
 {
@@ -48,7 +48,6 @@ static int	lexer(t_data *data, t_command *command)
 
 static void	read_input(t_data *data)
 {
-	//data->input = readline(PROMPT_GREEN);
 	data->input = readline("minishell -> ");
 	if (g_signum == SIGINT)
 	{
@@ -92,7 +91,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc != 1 || argv[1] != NULL || envp[0] == NULL)
 		return (EXIT_FAILURE);
-	//check_terminals();
+	check_terminals();
 	init_t_data(&data);
 	data.env = copy_envp(envp);
 	if (!data.env)

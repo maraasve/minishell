@@ -3,51 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:46:45 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 21:46:09 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 16:13:04 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-void	dup_fds(t_data *data, t_command *command)
+void	dup_out_fd(t_data *data, t_command *command, char **paths)
 {
-	if (command->in_fd != STDIN_FILENO || dup2(command->in_fd, STDOUT_FILENO) == -1)
+	if (command->out_fd != STDOUT_FILENO)
+	{
+		if (command->out_fd == -1)
+		{
+			data->exit_status = 1;
+			if (command->pipe)
+				close(command->pipe_fd[0]);
+			exit(terminate_minishell(data, paths));
+		}
+		if (!is_builtin(command->argv[0]))
+		{
+			if (dup2(command->out_fd, STDOUT_FILENO) == -1)
+			{
+				data->exit_status = 1;
+				if (command->pipe)
+					close(command->pipe_fd[0]);
+				exit(terminate_minishell(data, paths));
+			}
+			close(command->out_fd);
+		}
+	}
+}
+
+void	dup_fds(t_data *data, t_command *command, char **paths)
+{
+	if (command->in_fd != STDIN_FILENO)
 	{
 		if (command->in_fd == -1)
 		{
 			data->exit_status = 1;
-			exit(terminate_minishell(data, NULL));
+			if (command->pipe)
+				close(command->pipe_fd[0]);
+			exit(terminate_minishell(data, paths));
 		}
 		if (!is_builtin(command->argv[0]))
 		{
 			if (dup2(command->in_fd, STDIN_FILENO) == -1)
 			{
 				data->exit_status = 1;
-				exit(terminate_minishell(data, NULL));
+				if (command->pipe)
+					close(command->pipe_fd[0]);
+				exit(terminate_minishell(data, paths));
 			}
 			close(command->in_fd);
 		}
 	}
-	if (command->out_fd != STDOUT_FILENO)
-	{
-		if (command->out_fd == -1 || dup2(command->out_fd, STDOUT_FILENO) == -1)
-		{
-			data->exit_status = 1;
-			exit(terminate_minishell(data, NULL));
-		}
-		if (!is_builtin(command->argv[0]))
-		{
-			if (dup2(command->out_fd, STDIN_FILENO) == -1)
-			{
-				data->exit_status = 1;
-				exit(terminate_minishell(data, NULL));
-			}
-			close(command->out_fd);
-		}
-	}
+	dup_out_fd(data, command, paths);
 	if (command->pipe)
 		close(command->pipe_fd[0]);
 }
@@ -65,6 +78,16 @@ bool	paths_exists(t_data *data, char **paths_array)
 
 bool	access_true(t_data *data, char *cmd)
 {
+	DIR	*dir;
+
+	dir = opendir(cmd);
+	if (dir != NULL)
+	{
+		data->exit_status = CMD_NOT_X;
+		ft_putstr_fd("Is a directory\n", 2);
+		closedir(dir);
+		return (true);
+	}
 	if (access(cmd, X_OK) == 0)
 	{
 		return (true);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:01:01 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 11:30:28 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:07:05 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,25 @@ char	**rearrange_env(char *ptr_unset, char **array)
 	return (cpy_env);
 }
 
-int	ft_unset(t_data *data, t_command *cmd)
+int	ft_unset(t_data *data, char **argv)
 {
 	int		i;
 	int		j;
 
 	i = 1;
-	while (cmd->argv[i])
+	while (argv[i])
 	{
 		j = 0;
 		while (data->env[j])
 		{
-			if (ft_strncmp(cmd->argv[i], data->env[j], \
-			ft_env_len(cmd->argv[i])) == 0)
+			if (ft_strncmp(argv[i], data->env[j], ft_env_len(argv[i])) == 0)
 			{
-				if (ft_strncmp("=", data->env[j] + \
-				ft_env_len(cmd->argv[i]), 1) == 0)
+				if (ft_strncmp("=", data->env[j] + ft_env_len(argv[i]), 1) == 0)
 				{
 					data->env = rearrange_env(data->env[j], data->env);
 					if (!data->env)
 						return (error_memory_allocation(data, data->cmd_head));
+					break ;
 				}
 			}
 			j++;

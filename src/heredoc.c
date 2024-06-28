@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 15:01:28 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/27 13:49:09 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:02:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-static void	heredoc_child(t_data *data, char *del, int *pipe_fd, char **pth)
+static void	heredoc_child(t_data *data, t_command *cmd, char *del, char **pth)
 {
 	char	*str;
 
@@ -22,8 +22,8 @@ static void	heredoc_child(t_data *data, char *del, int *pipe_fd, char **pth)
 	{
 		if (str)
 		{
-			ft_putstr_fd(str, pipe_fd[1]);
-			ft_putstr_fd("\n", pipe_fd[1]);
+			ft_putstr_fd(str, cmd->pipe_fd[1]);
+			ft_putstr_fd("\n", cmd->pipe_fd[1]);
 			free(str);
 		}
 		str = readline("> ");
@@ -31,36 +31,50 @@ static void	heredoc_child(t_data *data, char *del, int *pipe_fd, char **pth)
 			exit(1);
 	}
 	free(str);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+	close(cmd->pipe_fd[0]);
+	close(cmd->pipe_fd[1]);
 	terminate_minishell(data, pth);
+	if (cmd->in_fd == -1 || cmd->out_fd == -1)
+	{
+		exit(1);
+	}
 	exit(0);
 }
 
-void	ft_heredoc(t_data *data, t_command *command, char **paths)
+void	wait_heredoc(t_data *data, t_command *command)
 {
-	int		pipe_fd[2];
+	waitpid(command->pid, &data->exit_status, 0);
+	if (WIFSIGNALED(data->exit_status))
+		data->exit_status += 128;
+	if (WIFEXITED(data->exit_status))
+		data->exit_status = WEXITSTATUS(data->exit_status);
+}
+
+int	ft_heredoc(t_data *data, t_command *command, char **paths)
+{
 	int		i;
 
 	i = 0;
 	while (command->delimiter && command->delimiter[i])
 	{
-		if (pipe(pipe_fd) < 0)
-			exit (1);
-		command->in_fd = pipe_fd[0];
+		if (pipe(command->pipe_fd) < 0)
+		{
+			ft_putstr_fd("pipe: error\n", 2);
+			return (EXIT_FAILURE);
+		}
+		if (command->in_fd != -1 && command->out_fd != -1)
+			command->in_fd = command->pipe_fd[0];
+		else
+			close(command->pipe_fd[0]);
 		command->pid = fork();
 		if (command->pid == 0)
-			heredoc_child(data, command->delimiter[i], pipe_fd, paths);
+			heredoc_child(data, command, command->delimiter[i], paths);
 		set_signal_handler(RUNNING, NULL);
-		close(pipe_fd[1]);
+		close(command->pipe_fd[1]);
 		if (command->delimiter[i + 1] != NULL)
-			close(pipe_fd[0]);
-		waitpid(command->pid, &data->exit_status, 0);
-		if (WIFSIGNALED(data->exit_status))
-			data->exit_status += 128;
-		if (WIFEXITED(data->exit_status))
-			data->exit_status = WEXITSTATUS(data->exit_status);
+			close(command->pipe_fd[0]);
+		wait_heredoc(data, command);
 		i++;
 	}
-	set_signal_handler(FALSE, NULL);
+	return (set_signal_handler(FALSE, NULL), EXIT_SUCCESS);
 }

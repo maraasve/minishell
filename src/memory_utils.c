@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:41:51 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 18:31:39 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:18:58 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	free_command_struct(t_command *command)
 	if (command->out_fd != STDOUT_FILENO)
 		free_null_set(NULL, NULL, command->out_fd);
 	if (command->delimiter)
-		free_null_set(NULL, &command->argv, -1);
+		free_null_set(NULL, &command->delimiter, -1);
 	if (command->pipe)
 		free_command_struct(command->pipe);
 	free(command);
