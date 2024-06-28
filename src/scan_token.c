@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scan_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:14:58 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 12:14:17 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:10:17 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_token	create_token(t_type type, t_scanner *scanner)
 	}
 	if (type == TOKEN_WORD)
 		scanner->current = traverse_token_word(scanner->current);
-	else
+	else if (*scanner->current)
 		scanner->current++;
 	token.type = type;
 	token.start = scanner->start;

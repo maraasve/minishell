@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 17:42:53 by maraasve          #+#    #+#             */
-/*   Updated: 2024/06/27 11:00:32 by marieke          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:37:32 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+char	*found_not_x(t_data *data, char *cmd)
+{
+	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
+	{
+		data->exit_status = CMD_NOT_X;
+		ft_putstr_fd("minishell: Command not executable\n", 2);
+		return (NULL);
+	}
+	return (cmd);
+}
 
 char	*get_command(t_data *data, char **paths_array, char *cmd)
 {
@@ -19,6 +30,8 @@ char	*get_command(t_data *data, char **paths_array, char *cmd)
 
 	if (access_true(data, cmd))
 		return (cmd);
+	if (!found_not_x(data, cmd))
+		return (NULL);
 	if (!paths_exists(data, paths_array))
 		return (NULL);
 	while (*paths_array && cmd[0] != '\0')

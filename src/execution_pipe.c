@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:09:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/28 15:01:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:25:01 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static void	execute_cmd(t_data *data, t_command *command, char **paths)
 			exit(terminate_minishell(data, NULL));
 		}
 		cmd = get_command(data, paths, command->argv[0]);
-		if (!cmd || data->exit_status == CMD_NOT_F || \
-		data->exit_status == CMD_NOT_X)
+		if (!cmd)
 			exit(terminate_minishell(data, paths));
 		else
 		{
