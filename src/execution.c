@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 17:42:53 by maraasve          #+#    #+#             */
-/*   Updated: 2024/06/28 18:37:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:15:40 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ char	*found_not_x(t_data *data, char *cmd)
 {
 	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
 	{
-		data->exit_status = CMD_NOT_X;
-		ft_putstr_fd("minishell: Command not executable\n", 2);
+		if (data->exit_status != CMD_NOT_F && data->exit_status != CMD_NOT_X)
+		{
+			data->exit_status = CMD_NOT_X;
+			ft_putstr_fd("minishell: Command not executable\n", 2);
+		}
 		return (NULL);
 	}
 	return (cmd);
@@ -41,13 +44,11 @@ char	*get_command(t_data *data, char **paths_array, char *cmd)
 			return (write(2, "minishell: memory allocation error\n", 35), NULL);
 		command = ft_strjoin(tmp, cmd);
 		free (tmp);
-		tmp = NULL;
 		if (!command)
 			return (write(2, "minishell: memory allocation error\n", 35), NULL);
 		if (access_true(data, command))
 			return (command);
 		free(command);
-		command = NULL;
 		paths_array++;
 	}
 	data->exit_status = CMD_NOT_F;

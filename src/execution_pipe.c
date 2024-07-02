@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:09:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/28 18:25:01 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:07:20 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	wait_child(t_data *data, t_command *cmd, t_command *prev_cmd)
 		if (WIFSIGNALED(data->exit_status) && \
 			cur_cmd->in_fd != -1 && cur_cmd->out_fd != -1)
 			data->exit_status += 128;
-		if (WIFEXITED(data->exit_status))
+		else if (WIFEXITED(data->exit_status))
 			data->exit_status = WEXITSTATUS(data->exit_status);
 		cur_cmd = cur_cmd->pipe;
 	}

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:46 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/28 15:02:03 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:48:07 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <dirent.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <limits.h>
+# include <linux/limits.h>
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -43,12 +43,6 @@ extern volatile sig_atomic_t	g_signum;
 # define CHILD 2
 # define RUNNING 3
 # define HERE_DOC 4
-
-# define PROMPT_GREEN "\033[1;97m\033[48;2;0;32;0mm\033[48;2;0;41;0mi\
-\033[48;2;0;50;0mn\033[48;2;0;59;0mi\033[48;2;0;68;0ms\
-\033[48;2;0;77;0mh\033[48;2;0;86;0me\033[48;2;0;95;0ml\
-\033[48;2;0;104;0ml\033[48;2;0;113;0m \033[48;2;0;122;0m-\
-\033[48;2;0;131;0m>\033[48;2;0;140;0m \033[0m "
 
 typedef struct s_command
 {

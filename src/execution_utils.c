@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:46:45 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/28 18:38:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:20:29 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,25 @@ bool	access_true(t_data *data, char *cmd)
 	dir = opendir(cmd);
 	if (dir != NULL)
 	{
-		data->exit_status = CMD_NOT_X;
-		ft_putstr_fd("minishell: Is a directory\n", 2);
 		closedir(dir);
-		return (true);
+		if ((ft_strlen(cmd) >= 2 && cmd[0] == '.' && cmd[1] == '/') \
+			|| cmd[ft_strlen(cmd) - 1] == '/' || cmd[0] == '/')
+		{
+			data->exit_status = CMD_NOT_X;
+			ft_putstr_fd("minishell: Is a directory\n", 2);
+		}
+		else
+			return (data->exit_status = CMD_NOT_F, false);
+		return (false);
 	}
 	if (access(cmd, X_OK) == 0)
 		return (true);
+	if (access(cmd, F_OK) == 0 && ft_strchr(cmd, '/'))
+	{
+		data->exit_status = CMD_NOT_X;
+		ft_putstr_fd("minishell: Command not executable\n", 2);
+		return (false);
+	}
 	return (false);
 }
 
