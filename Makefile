@@ -53,24 +53,29 @@ endif
 all: $(NAME)
 
 $(LIBFT_NAME):
-	$(MAKE) -C ./libft
+	@$(MAKE) -C ./libft
 
 $(NAME): $(OBJS) $(LIBFT_NAME)
-	$(CC) $(OBJS) -L./libft -lft $(LDFLAGS) -o $(NAME)
+	@$(CC) $(OBJS) -L./libft -lft $(LDFLAGS) -o $(NAME)
+	@echo "------------------------------------------------------------"
+	@echo "MINISHELL READY TO BE EXECUTED!"
 
 $(OBJDIR)/%.o:$(SRCS_DIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 clean:
-	$(RM) $(OBJDIR)
-	$(MAKE) -C ./libft clean
+	@$(RM) $(OBJDIR)
+	@$(MAKE) -C ./libft clean
+	@echo "------------------------------------------------------------"
+	@echo "REMOVED OBJ FILES"
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -C ./libft fclean
+	@$(RM) $(NAME)
+	@$(MAKE) -C ./libft fclean
+	@echo "REMOVED EXECUTABLES"
 
 re: fclean all
 

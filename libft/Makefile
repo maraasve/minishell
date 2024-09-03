@@ -1,7 +1,7 @@
 NAME	=	libft.a
 CC	=	cc
 CFLAGS	=	-Wall -Werror -Wextra
-SRCS	=	ft_atoi.c\
+SRC_FILES	=	ft_atoi.c\
 ft_isalnum.c\
 ft_isdigit.c\
 ft_memchr.c\
@@ -44,31 +44,36 @@ ft_lstadd_back.c\
 ft_lstdelone.c\
 ft_lstclear.c
 
-BONUS_OBJS = $(BONUS_SRC:.c=.o)
-
-OBJS	=	$(SRCS:.c=.o)
-RM	=	rm	-f
+BONUS_OBJ = $(addprefix $(OBJ_DIR)/,$(subst .c,.o,$(BONUS_SRC)))
+SRC_DIR = src
+SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
+OBJ_DIR = obj
+OBJ	=	$(addprefix $(OBJ_DIR)/,$(subst .c,.o,$(SRC_FILES)))
+RM	=	rm -rf
 
 all:	$(NAME)
 
-$(NAME): $(OBJS)
-	ar -rcs $(NAME) $(OBJS)
+$(NAME): $(OBJ)
+	@ar -rcs $(NAME) $(OBJ)
 
-$(OBJS): %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+obj/%.o: src/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	$(RM) $(OBJS)	$(BONUS_OBJS)
+	@$(RM) $(OBJ_DIR) $(BONUS_OBJ)
 
 fclean: clean
-	$(RM)	$(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
-bonus: $(NAME) $(BONUS_OBJS)
-	ar -rcs $(NAME) $(BONUS_OBJS)
+bonus: $(NAME) $(BONUS_OBJ)
+	@ar -rcs $(NAME) $(BONUS_OBJ)
 
-$(BONUS_OBJS): %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(BONUS_OBJ): %.o : %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean fclean all re

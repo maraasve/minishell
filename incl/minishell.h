@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:46 by andmadri          #+#    #+#             */
-/*   Updated: 2024/07/02 14:48:07 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:20:36 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "../libft/incl/libft.h"
 
 extern volatile sig_atomic_t	g_signum;
 
@@ -43,6 +43,20 @@ extern volatile sig_atomic_t	g_signum;
 # define CHILD 2
 # define RUNNING 3
 # define HERE_DOC 4
+# define PROMPT "\001\033[1m\033[48;2;0;0;0m\033[38;2;255;255;255m\002M\
+\001\033[48;2;0;12;0m\002I\
+\001\033[48;2;0;24;0m\002N\
+\001\033[48;2;0;36;0m\002I\
+\001\033[48;2;0;48;0m\002S\
+\001\033[48;2;0;60;0m\002H\
+\001\033[48;2;0;72;0m\002E\
+\001\033[48;2;0;84;0m\002L\
+\001\033[48;2;0;96;0m\002L\
+\001\033[48;2;0;108;0m\002 \
+\001\033[48;2;0;120;0m\002-\
+\001\033[48;2;0;132;0m\002>\
+\001\033[48;2;0;144;0m\002 \
+\001\033[0m\002 "
 
 typedef struct s_command
 {

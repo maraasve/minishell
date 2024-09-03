@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:50 by andmadri          #+#    #+#             */
-/*   Updated: 2024/07/02 15:51:30 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:54:26 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	lexer(t_data *data, t_command *command)
 
 static void	read_input(t_data *data)
 {
-	data->input = readline("minishell -> ");
+	data->input = readline(PROMPT);
 	if (g_signum == SIGINT)
 	{
 		data->exit_status = 130;

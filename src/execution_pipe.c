@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:09:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/07/02 15:07:20 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:29:48 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ static int	execute_builtin(t_data *data, t_command *command, char **paths)
 	if (command->pipe)
 		close(command->pipe_fd[0]);
 	free_dbl_array(&paths);
-	if (ft_strncmp(command->argv[0], "cd", ft_strlen("cd")) == 0)
+	if (ft_strncmp(command->argv[0], "cd", ft_strlen(command->argv[0])) == 0)
 		return (ft_cd(data, command));
-	else if (ft_strncmp(command->argv[0], "echo", ft_strlen("echo")) == 0)
+	else if (ft_strncmp(command->argv[0], "echo", ft_strlen(command->argv[0])) == 0)
 		return (ft_echo(data, *command));
-	else if (ft_strncmp(command->argv[0], "env", ft_strlen("env")) == 0)
+	else if (ft_strncmp(command->argv[0], "env", ft_strlen(command->argv[0])) == 0)
 		return (ft_env(data, command, true));
-	else if (ft_strncmp(command->argv[0], "exit", ft_strlen("exit")) == 0)
+	else if (ft_strncmp(command->argv[0], "exit", ft_strlen(command->argv[0])) == 0)
 		ft_exit(data, data->cmd_head, command, paths);
-	else if (ft_strncmp(command->argv[0], "export", ft_strlen("export")) == 0)
+	else if (ft_strncmp(command->argv[0], "export", ft_strlen(command->argv[0])) == 0)
 		return (ft_export(data, command));
-	else if (ft_strncmp(command->argv[0], "pwd", ft_strlen("pwd")) == 0)
+	else if (ft_strncmp(command->argv[0], "pwd", ft_strlen(command->argv[0])) == 0)
 		return (ft_pwd(data, command, true));
-	else if (ft_strncmp(command->argv[0], "unset", ft_strlen("unset")) == 0)
+	else if (ft_strncmp(command->argv[0], "unset", ft_strlen(command->argv[0])) == 0)
 		return (ft_unset(data, command->argv));
 	return (EXIT_FAILURE);
 }
