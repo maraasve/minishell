@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 18:20:18 by andmadri          #+#    #+#             */
-/*   Updated: 2024/09/03 15:16:13 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:53:46 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/libft.h"
+#include <libft.h>
 #include <limits.h>
 
 void	*ft_calloc(size_t nelem, size_t elsize)

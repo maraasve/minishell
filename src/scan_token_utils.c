@@ -6,11 +6,11 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:35:34 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 10:34:41 by marieke          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 void	skip_space(t_scanner *scanner)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 11:55:32 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/28 14:00:20 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 static int	compare_str_upper(char *str1, char *str2)
 {

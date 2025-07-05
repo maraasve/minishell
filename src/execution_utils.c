@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 09:46:45 by andmadri          #+#    #+#             */
-/*   Updated: 2024/07/02 15:20:29 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 void	dup_out_fd(t_data *data, t_command *command, char **paths)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:50 by andmadri          #+#    #+#             */
-/*   Updated: 2024/09/03 14:54:26 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:59:29 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 volatile sig_atomic_t	g_signum = 0;
 
@@ -68,7 +68,7 @@ static int	read_eval_print_loop(t_data *data)
 		data->cmd_head = NULL;
 		read_input(data);
 		add_history(data->input);
-		data->input = expander_test(data, 0);
+		data->input = expander(data, 0);
 		if (!data->input)
 			continue ;
 		data->cmd_head = (t_command *)malloc(sizeof(t_command));

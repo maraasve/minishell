@@ -6,11 +6,11 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:46:24 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 11:48:15 by marieke          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 bool	not_valid_redirections(char *input)
 {

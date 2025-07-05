@@ -6,11 +6,11 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:12:50 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 11:29:58 by marieke          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 int	ft_pwd(t_data *data, t_command *command, bool print)
 {

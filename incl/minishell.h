@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 20:20:46 by andmadri          #+#    #+#             */
-/*   Updated: 2024/09/03 15:20:36 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:59:21 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <dirent.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <linux/limits.h>
+# include <limits.h>
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -116,10 +116,8 @@ typedef struct s_parse
 }	t_parse;
 
 /* ******************************EXECUTION******************************* */
-void	get_cmd_array(t_command *command);
 void	dup_fds(t_data *data, t_command *command, char **paths);
 int		ft_heredoc(t_data *data, t_command *command, char **paths);
-void	ft_pipe_heredoc(t_data *data, t_command *command, char **paths);
 int		execution(t_data *data, t_command *command);
 int		execution_pipe(t_data *data, t_command *command, char **paths);
 int		is_builtin(char *cmd);
@@ -139,7 +137,7 @@ void	init_t_data(t_data *data);
 t_parse	init_parser(t_command *cmd, t_data *data, t_token tkn, t_scanner *scnr);
 
 /* ***************************EXPANDER*************************************** */
-char	*expander_test(t_data *data, int i);
+char	*expander(t_data *data, int i);
 
 /* ****************************TOKENIZER************************************* */
 void	skip_space(t_scanner *scanner);

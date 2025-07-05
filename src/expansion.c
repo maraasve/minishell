@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expandertest.c                                     :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 22:10:03 by marieke           #+#    #+#             */
-/*   Updated: 2024/06/27 10:34:10 by marieke          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:22:30 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 char	*copy_realloc(char *new_str, int capacity, char c)
 {
@@ -99,7 +99,7 @@ int	ft_expand(t_data *data, char **new_str, char *input, int *len)
 	return (1);
 }
 
-char	*expander_test(t_data *data, int i)
+char	*expander(t_data *data, int i)
 {
 	char	*new_str;
 	bool	squotes;
@@ -120,8 +120,11 @@ char	*expander_test(t_data *data, int i)
 			if (!ft_expand(data, &new_str, &data->input[i], &i))
 				return (free(new_str), NULL);
 		}
-		new_str = copy_realloc(new_str, ft_strlen(new_str) + 1, data->input[i]);
-		i++;
+		else
+		{
+			new_str = copy_realloc(new_str, ft_strlen(new_str) + 1, data->input[i]);
+			i++;
+		}
 		if (!new_str)
 			return (error_memory_allocation(data, data->cmd_head), NULL);
 	}

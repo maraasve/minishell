@@ -1,42 +1,44 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -isystem $(INCL_DIR) -g
 RM = rm -rf
 LIBFT_NAME = libft/libft.a
+INCL_DIR = incl
 
 SRCS_DIR = src
-SRCS_FILES = minishell.c\
-envp_utils.c\
-ft_echo.c\
-ft_pwd.c\
-ft_cd.c\
-ft_env.c\
-ft_export.c\
-ft_export_utils.c\
-ft_unset.c\
-ft_exit.c\
-execution_utils.c\
-execution_pipe.c\
-execution.c\
-heredoc.c\
-expandertest.c\
-init_data.c\
-check_input.c\
-check_input_utils.c\
-scan_token.c\
-scan_token_utils.c\
-scan_token_utils2.c\
-analyze_token.c\
-analyze_token_type.c\
-analyze_token_utils.c\
-errors.c\
-memory_utils.c\
-signals.c\
-analyze_token_word.c\
-errors_mem.c
+SRCS_FILES =	minishell.c\
+				envp_utils.c\
+				ft_echo.c\
+				ft_pwd.c\
+				ft_cd.c\
+				ft_env.c\
+				ft_export.c\
+				ft_export_utils.c\
+				ft_unset.c\
+				ft_exit.c\
+				execution_utils.c\
+				execution_pipe.c\
+				execution.c\
+				heredoc.c\
+				expansion.c\
+				init_data.c\
+				check_input.c\
+				check_input_utils.c\
+				scan_token.c\
+				scan_token_utils.c\
+				scan_token_utils2.c\
+				analyze_token.c\
+				analyze_token_type.c\
+				analyze_token_utils.c\
+				errors.c\
+				memory_utils.c\
+				signals.c\
+				analyze_token_word.c\
+				errors_mem.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
+
 OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(subst .c,.o,$(SRCS_FILES)))
 

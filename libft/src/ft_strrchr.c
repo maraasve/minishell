@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:53:28 by andmadri          #+#    #+#             */
-/*   Updated: 2024/09/03 15:18:34 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:53:46 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/libft.h"
+#include <libft.h>
 
 char	*ft_strrchr(const char *str, int c)
 {

@@ -6,11 +6,11 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:05:10 by andmadri          #+#    #+#             */
-/*   Updated: 2024/06/27 10:33:58 by marieke          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:58:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include <minishell.h>
 
 int	ft_arraylen(char **envp)
 {
